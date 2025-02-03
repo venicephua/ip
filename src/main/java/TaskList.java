@@ -8,27 +8,50 @@ public class TaskList {
     }
 
     public void addTask(String taskName) {
-        if (taskListSize == tasks.length) {
-            System.out.println(Nova.SPACE + "Task list is full!");
-            return;
-        }
-
-        Task newTask = new Task();
-        newTask.setName(taskName);
-        tasks[taskListSize++] = newTask;
         System.out.println(Nova.BORDER);
-        System.out.println(Nova.SPACE + "added: " + newTask.getName());
+        if (taskListSize == tasks.length) {
+            System.out.println(Nova.INDENT + "Task list is full!");
+        } else {
+            Task newTask = new Task();
+            newTask.setName(taskName);
+            tasks[taskListSize++] = newTask;
+            System.out.println(Nova.INDENT + "added: " + taskName);
+        }
+        System.out.println(Nova.BORDER);
+    }
+
+    public void markDone(int taskId) {
+        System.out.println(Nova.BORDER);
+        if (taskId < 0 || taskId >= taskListSize) {
+            System.out.println(Nova.INDENT + "Hm... I can't find this task :/");
+        } else {
+            tasks[taskId].isDone = true;
+            System.out.println(Nova.INDENT + "Yay! I've marked this task done:");
+            System.out.println(Nova.INDENT + tasks[taskId].getName());
+        }
+        System.out.println(Nova.BORDER);
+    }
+
+    public void unmarkDone(int taskId) {
+        System.out.println(Nova.BORDER);
+        if (taskId < 0 || taskId >= taskListSize) {
+            System.out.println(Nova.INDENT + "Hm... I can't find this task :/");
+        } else {
+            tasks[taskId].isDone = false;
+            System.out.println(Nova.INDENT + "Okay, I've unmarked this task:");
+            System.out.println(Nova.INDENT + tasks[taskId].getName());
+        }
         System.out.println(Nova.BORDER);
     }
 
     public void printTaskList() {
         System.out.println(Nova.BORDER);
         if (taskListSize == 0) {
-            System.out.println(Nova.SPACE + "To do list is empty! Woohoo! ^o^");
+            System.out.println(Nova.INDENT + "To do list is empty! Woohoo! ^o^");
         } else {
-            System.out.println(Nova.SPACE + "What tasks should we do today?");
+            System.out.println(Nova.INDENT + "What should we do today?");
             for (int i = 0; i < taskListSize; i++) {
-                System.out.println(Nova.SPACE + (i + 1) + ". " + tasks[i].getName());
+                System.out.println(Nova.INDENT + (i + 1) + ". " + tasks[i].getName());
             }
         }
         System.out.println(Nova.BORDER);

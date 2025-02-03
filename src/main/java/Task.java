@@ -1,8 +1,10 @@
 public class Task {
     protected String name;
+    protected boolean isDone;
 
     public Task() {
         this.name = "";
+        this.isDone = false;
     }
 
     public void setName(String name) {
@@ -10,6 +12,10 @@ public class Task {
     }
 
     public String getName() {
-        return name;
+        return "[" + getStatusIcon() + "] " + name;
+    }
+
+    public String getStatusIcon() {
+        return (isDone ? "X" : " ");
     }
 }
