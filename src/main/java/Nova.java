@@ -1,8 +1,10 @@
 import java.util.Scanner;
 
 public class Nova {
+    public static final String BORDER = "   _________________________________";
+    public static final String SPACE = "    ";
+
     public static void logo() {
-        String border = "   _________________________________";
         String logo = """
                     __    _ \s
                    |  \\  | |  ___  __    __  ___ _ \s
@@ -10,47 +12,45 @@ public class Nova {
                    | | \\\\| || |_| | \\ \\/ / | |_|  |
                    |_|  \\__| \\___/   \\__/   \\___/_|
                 """;
-        System.out.println(border + "\n" + logo);
+        System.out.println(BORDER + "\n" + logo);
     }
 
     public static void sayHello() {
-        String border = "   _________________________________";
-        System.out.println(border);
-        System.out.println("    Hey there!! I'm Nova :D");
-        System.out.println("    What can I do for you?");
-        System.out.println(border);
+        System.out.println(SPACE + "Hey there!! I'm Nova :D");
+        System.out.println(SPACE + "What can I do for you?");
     }
 
     public static void sayBye() {
-        String border = "   _________________________________";
-        System.out.println(border);
-        System.out.println("    Bye now! See you soon! ^o^");
-        System.out.println(border);
-    }
-
-    public static void echo(String message) {
-        String border = "   _________________________________";
-        System.out.println(border);
-        System.out.println("    " + message);
-        System.out.println(border);
+        System.out.println(SPACE + "Bye now! See you soon! ^o^");
     }
 
     public static void main(String[] args) {
-        logo();
-        sayHello();
+        TaskList tasks = new TaskList(100);
 
+        logo();
+        System.out.println(BORDER);
+        sayHello();
+        System.out.println(BORDER);
+
+        Scanner input = new Scanner(System.in);
 
         while (true) {
             System.out.print("> ");
-            String line;
-            Scanner input = new Scanner(System.in);
-            line = input.nextLine();
+            String line = input.nextLine();
 
             if (line.contains("bye")) {
+                System.out.println(BORDER);
                 sayBye();
+                System.out.println(BORDER);
                 break;
             }
-            echo(line);
+
+            if (line.equals("list")) {
+                tasks.printTaskList();
+                continue;
+            }
+
+            tasks.addTask(line);
         }
     }
 }
