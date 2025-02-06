@@ -4,6 +4,9 @@ public class Nova {
     public static final String BORDER = "   __________________________________";
     public static final String INDENT = "    ";
 
+    private static final Task[] tasks = new Task[100];
+    private static int counter = 0;
+
     public static void logo() {
         String logo = """
                      __    _ \s
@@ -23,44 +26,125 @@ public class Nova {
     }
 
     public static void sayBye() {
-        System.out.println(BORDER);
         System.out.println(INDENT + "Bye now! See you soon! ^o^");
-        System.out.println(BORDER);
     }
 
     public static void main(String[] args) {
-        TaskList tasks = new TaskList(100);
 
         logo();
         sayHello();
         Scanner input = new Scanner(System.in);
+        boolean running = true;
 
-        while (true) {
+        while (running) {
             System.out.print("> ");
-            String line = input.nextLine();
+            String line = input.nextLine().trim();
 
-            if (line.contains("bye")) {
-                sayBye();
+            String command;
+            String taskName = null;
+
+            int index = line.indexOf(" ");
+            if (index == -1) {
+                command = line;
+            } else {
+                command = line.substring(0, index);
+                taskName = line.substring(index+1).trim();
+            }
+
+            System.out.println(BORDER);
+
+            switch (command) {
+            case "hello", "hi", "hey": {
+                System.out.println(INDENT + "Hi~ :D ");
                 break;
             }
 
-            if (line.equals("list")) {
-                tasks.printTaskList();
+            case "bye": {
+                sayBye();
+                running = false;
+                break;
             }
 
-            else if (line.contains("unmark")) {
-                int taskId = Integer.parseInt(line.split(" ")[1]);
-                tasks.unmarkDone(taskId - 1);
+            case "list": {
+                if (counter == 0) {
+                    System.out.println(INDENT + "Task list is empty! Woohoo~ ^o^");
+                } else {
+                    System.out.println(INDENT + "What should we do today?");
+                    for (int i = 0; i < counter; i++) {
+                        System.out.println(INDENT + (i + 1) + ". " + tasks[i].toString());
+                    }
+                }
+                break;
             }
 
-            else if (line.contains("mark")) {
-                int taskId = Integer.parseInt(line.split(" ")[1]);
-                tasks.markDone(taskId - 1);
+            case "mark", "unmark" : {
+                if (taskName == null) {
+                    System.out.println(INDENT + "Hm... please enter a task number!");
+                    break;
+                }
+                int taskId = Integer.parseInt(taskName);
+                if (taskId - 1 < 0 || taskId > counter) {
+                    System.out.println(INDENT + "Hm... I can't find this task ;/");
+                    break;
+                }
+                if (command.equals("mark")) {
+                    tasks[taskId - 1].markDone();
+                } else {
+                    tasks[taskId - 1].unmarkDone();
+                }
+
+                break;
             }
 
-            else {
-                tasks.addTask(line);
+            case "todo", "deadline", "event": {
+                if (counter >= tasks.length) {
+                    System.out.println(INDENT + "Task list is full!");
+                    break;
+                }
+
+                if (taskName == null) {
+                    System.out.println(INDENT + "Hm... please enter a task name!");
+                    break;
+                }
+
+                if (command.equals("todo")) {
+                    tasks[counter++] = new Todo(taskName);
+
+                } else if (command.equals("deadline")) {
+                    String[] words = taskName.split("/by ", 2);
+                    if (words.length < 2) {
+                        System.out.println(INDENT + "Uh oh... please follow this format: deadline <task> /by <date>");
+                        break;
+                    }
+                    String taskDesc = words[0];
+                    String by = words[1];
+
+                    tasks[counter++] = new Deadline(taskDesc, by);
+
+                } else {
+                    String[] words = taskName.split("/", 3);
+                    if (words.length < 3) {
+                        System.out.println(INDENT + "Uh oh... please follow this format: event <task> /from <date> /to <date>");
+                        break;
+                    }
+                    String taskDesc = words[0];
+                    String from = words[1].substring(5);
+                    String to = words[2].substring(3);
+                    tasks[counter++] = new Event(taskDesc, from, to);
+                }
+
+                System.out.println(INDENT + "I've added a new task: " + tasks[counter-1].toString());
+                System.out.println(INDENT + "Now we have " + counter + ((counter == 1) ? " task!" : " tasks!"));
+                break;
             }
+
+            default: {
+                System.out.println(INDENT + "Hm... I'm not sure what to do with: " + line);
+            }
+
+            }
+            System.out.println(BORDER);
+
         }
     }
 }

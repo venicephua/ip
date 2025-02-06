@@ -1,21 +1,30 @@
 public class Task {
-    protected String name;
+    protected String description;
     protected boolean isDone;
 
-    public Task() {
-        this.name = "";
+    public Task(String description) {
+        this.description = description;
         this.isDone = false;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return "[" + getStatusIcon() + "] " + name;
-    }
-
     public String getStatusIcon() {
-        return (isDone ? "X" : " ");
+        return "[" + (isDone ? "X" : " ") + "] ";
+    }
+
+    public void markDone() {
+        this.isDone = true;
+        System.out.println(Nova.INDENT + "Yay! I've marked this task done: ");
+        System.out.println(Nova.INDENT + this);
+    }
+
+    public void unmarkDone() {
+        this.isDone = false;
+        System.out.println(Nova.INDENT + "Okay, I've marked this task undone: ");
+        System.out.println(Nova.INDENT + this);
+    }
+
+    @Override
+    public String toString() {
+        return getStatusIcon() + description;
     }
 }
