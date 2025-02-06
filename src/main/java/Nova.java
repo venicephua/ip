@@ -37,7 +37,6 @@ public class Nova {
     }
 
     public static void main(String[] args) {
-
         logo();
         sayHello();
         Scanner input = new Scanner(System.in);
@@ -157,7 +156,6 @@ public class Nova {
 
             }
             System.out.println(BORDER);
-
         }
     }
 }
