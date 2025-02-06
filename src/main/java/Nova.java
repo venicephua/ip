@@ -5,6 +5,13 @@ public class Nova {
     public static final String INDENT = "    ";
 
     private static final Task[] tasks = new Task[100];
+    public static final String ERR_TASK_NUM = "Hm... Please enter a task number!";
+    public static final String ERR_INVALID_TASK = "Hm... I can't find this task :/";
+    public static final String ERR_NO_TASK_NAME = "Hm... Please enter a task name!";
+    public static final String ERR_INVALID_COMMAND = "Hm... I'm not sure what to do with: ";
+    public static final String ERR_DEADLINE_FORMAT = "Uh oh... Please follow this format: deadline <task> /by <date>";
+    public static final String ERR_EVENT_FORMAT = "Uh oh... Please follow this format: event <task> /from <date> /to <date>";
+
     private static int counter = 0;
 
     public static void logo() {
@@ -62,6 +69,7 @@ public class Nova {
             case "bye": {
                 sayBye();
                 running = false;
+                input.close();
                 break;
             }
 
@@ -79,18 +87,23 @@ public class Nova {
 
             case "mark", "unmark" : {
                 if (taskName == null) {
-                    System.out.println(INDENT + "Hm... please enter a task number!");
+                    System.out.println(INDENT + ERR_TASK_NUM);
                     break;
                 }
-                int taskId = Integer.parseInt(taskName);
-                if (taskId - 1 < 0 || taskId > counter) {
-                    System.out.println(INDENT + "Hm... I can't find this task ;/");
-                    break;
+                try {
+                    int taskId = Integer.parseInt(taskName);
+                    if (taskId - 1 < 0 || taskId > counter) {
+                        System.out.println(INDENT + ERR_INVALID_TASK);
+                        break;
+                    }
+                    if (command.equals("mark")) {
+                        tasks[taskId - 1].markDone();
+                    } else {
+                        tasks[taskId - 1].unmarkDone();
+                    }
                 }
-                if (command.equals("mark")) {
-                    tasks[taskId - 1].markDone();
-                } else {
-                    tasks[taskId - 1].unmarkDone();
+                catch (NumberFormatException e) {
+                    System.out.println(INDENT + ERR_TASK_NUM);
                 }
 
                 break;
@@ -103,7 +116,7 @@ public class Nova {
                 }
 
                 if (taskName == null) {
-                    System.out.println(INDENT + "Hm... please enter a task name!");
+                    System.out.println(INDENT + ERR_NO_TASK_NAME);
                     break;
                 }
 
@@ -113,7 +126,7 @@ public class Nova {
                 } else if (command.equals("deadline")) {
                     String[] words = taskName.split("/by ", 2);
                     if (words.length < 2) {
-                        System.out.println(INDENT + "Uh oh... please follow this format: deadline <task> /by <date>");
+                        System.out.println(INDENT + ERR_DEADLINE_FORMAT);
                         break;
                     }
                     String taskDesc = words[0];
@@ -122,14 +135,14 @@ public class Nova {
                     tasks[counter++] = new Deadline(taskDesc, by);
 
                 } else {
-                    String[] words = taskName.split("/", 3);
+                    String[] words = taskName.split(" /from | /to ", 3);
                     if (words.length < 3) {
-                        System.out.println(INDENT + "Uh oh... please follow this format: event <task> /from <date> /to <date>");
+                        System.out.println(INDENT + ERR_EVENT_FORMAT);
                         break;
                     }
-                    String taskDesc = words[0];
-                    String from = words[1].substring(5);
-                    String to = words[2].substring(3);
+                    String taskDesc = words[0].trim();
+                    String from = words[1].trim();
+                    String to = words[2].trim();
                     tasks[counter++] = new Event(taskDesc, from, to);
                 }
 
@@ -139,7 +152,7 @@ public class Nova {
             }
 
             default: {
-                System.out.println(INDENT + "Hm... I'm not sure what to do with: " + line);
+                System.out.println(INDENT + ERR_INVALID_COMMAND + line);
             }
 
             }
