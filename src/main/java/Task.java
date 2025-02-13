@@ -1,6 +1,6 @@
 public class Task {
-    public static final String TASK_MARKED_DONE = "Yay! I've marked this task done: ";
-    public static final String TASK_UNMARKED_DONE = "Okay, I've marked this task undone: ";
+    public static final String MARKED_TASK_DONE = "Yay! I've marked this task done: ";
+    public static final String UNMARKED_TASK_DONE = "Okay, I've marked this task undone: ";
     protected String description;
     protected boolean isDone;
 
@@ -13,16 +13,16 @@ public class Task {
         return "[" + (isDone ? "X" : " ") + "] ";
     }
 
-    public void markDone() {
+    public void markTaskDone() {
         this.isDone = true;
-        System.out.println(Nova.INDENT + TASK_MARKED_DONE);
-        System.out.println(Nova.INDENT + this);
+        Nova.printMessage(MARKED_TASK_DONE);
+        Nova.printMessage(this.toString());
     }
 
-    public void unmarkDone() {
+    public void unmarkTaskDone() {
         this.isDone = false;
-        System.out.println(Nova.INDENT + TASK_UNMARKED_DONE);
-        System.out.println(Nova.INDENT + this);
+        Nova.printMessage(UNMARKED_TASK_DONE);
+        Nova.printMessage(this.toString());
     }
 
     @Override
