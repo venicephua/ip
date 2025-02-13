@@ -6,7 +6,7 @@ public class Nova {
     private static final int MAX_TASKS = 100;
 
     private static final Task[] tasks = new Task[MAX_TASKS];
-    public static final String ERR_TASK_NUM = "We're missing a task number (!";
+    public static final String ERR_TASK_NUM = "We're missing a task number!";
     public static final String ERR_INVALID_TASK = "I can't find this task :/";
     public static final String ERR_EMPTY_TASK = "We're missing a task name!";
     public static final String ERR_INVALID_COMMAND = "I'm not sure what to do with: ";
