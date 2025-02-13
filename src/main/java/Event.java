@@ -1,15 +1,15 @@
 public class Event extends Task {
-    protected String startTime;
-    protected String endTime;
+    protected String from;
+    protected String to;
 
-    public Event(String description, String startTime, String endTime) {
+    public Event(String description, String from, String to) {
         super(description);
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.from = from;
+        this.to = to;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + startTime + ", to: " + endTime + ")";
+        return "[E]" + super.toString() + " (from: " + from + ", to: " + to + ")";
     }
 }
