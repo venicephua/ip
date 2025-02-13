@@ -1,3 +1,7 @@
+package nova.task;
+
+import nova.ui.Nova;
+
 public class Task {
     public static final String MARKED_TASK_DONE = "Yay! I've marked this task done: ";
     public static final String UNMARKED_TASK_DONE = "Okay, I've marked this task undone: ";
