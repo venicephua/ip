@@ -6,12 +6,16 @@ public class Nova {
     private static final int MAX_TASKS = 100;
 
     private static final Task[] tasks = new Task[MAX_TASKS];
-    public static final String ERR_TASK_NUM = "We're missing a task number!";
+    public static final String ERR_TASK_NUM = "We're missing a task number (!";
     public static final String ERR_INVALID_TASK = "I can't find this task :/";
     public static final String ERR_EMPTY_TASK = "We're missing a task name!";
     public static final String ERR_INVALID_COMMAND = "I'm not sure what to do with: ";
-    public static final String ERR_DEADLINE_FORMAT = "Please follow this format: " + "\n" + INDENT + "deadline <task> /by <date>";
-    public static final String ERR_EVENT_FORMAT = "Please follow this format: " + "\n" + INDENT + "event <task> /from <date> /to <date>";
+    public static final String ERR_DEADLINE_FORMAT = "Please follow this format: " + "\n" +
+                                                     INDENT + "deadline <task> /by <date>";
+    public static final String ERR_EVENT_FORMAT = "Please follow this format: " + "\n" +
+                                                  INDENT + "event <task> /from <date> /to <date>";
+    public static final String NEW_TASK_ADDED = "Gotcha! I've added a new task: ";
+    public static final String TASK_LIST_FULL = "Task list is full!";
 
     private static int counter = 0;
 
@@ -42,7 +46,7 @@ public class Nova {
     }
 
     public static void printErrorMessage(String errorMessage) {
-        System.out.println(INDENT + "Hey so... " + errorMessage);
+        System.out.println(INDENT + "Girl... " + errorMessage);
     }
 
     public static void listTasks() {
@@ -50,13 +54,15 @@ public class Nova {
             printMessage("Task list is empty! Woohoo~ ^o^");
             return;
         }
-        printMessage("Hey! What should we do today?");
+
+        printMessage("Hey girl~ What should we do today?");
         for (int i = 0; i < counter; i++) {
             printMessage((i + 1) + ". " + tasks[i].toString());
         }
     }
 
-    public static void processCommand(String command, String taskName) throws InvalidCommandException {
+    public static void processCommand(String command, String taskName)
+            throws InvalidCommandException {
         switch (command) {
         case "list": {
             listTasks();
@@ -76,7 +82,7 @@ public class Nova {
 
         case "todo", "deadline", "event": {
             if (counter >= tasks.length) {
-                printMessage("Task list is full!");
+                printMessage(TASK_LIST_FULL);
                 break;
             }
 
@@ -139,7 +145,7 @@ public class Nova {
             break;
         }
 
-        printMessage("I've added a new task: ");
+        printMessage(NEW_TASK_ADDED);
         printMessage(tasks[counter-1].toString());
         printMessage("Now we have " + counter + ((counter == 1) ? " task!" : " tasks!"));
     }
@@ -151,7 +157,7 @@ public class Nova {
         }
 
         int taskId = Integer.parseInt(taskName);
-        if (taskId - 1 < 0 || taskId > counter) {
+        if (taskId < 1 || taskId > counter) {
             throw new InvalidTaskException();
         }
 
