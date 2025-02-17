@@ -4,7 +4,8 @@ import nova.ui.Nova;
 
 public class Task {
     public static final String MARKED_TASK_DONE = "Yay! I've marked this task done: ";
-    public static final String UNMARKED_TASK_DONE = "Okay, I've marked this task undone: ";
+    public static final String MARKED_TASK_UNDONE = "Okay, I've marked this task undone: ";
+
     protected String description;
     protected boolean isDone;
 
@@ -14,7 +15,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return "[" + (isDone ? "X" : " ") + "] ";
+        return "[" + (isDone ? "✖" : " ") + "] ";
     }
 
     public void markTaskDone() {
@@ -25,7 +26,7 @@ public class Task {
 
     public void unmarkTaskDone() {
         this.isDone = false;
-        Nova.printMessage(UNMARKED_TASK_DONE);
+        Nova.printMessage(MARKED_TASK_UNDONE);
         Nova.printMessage(this.toString());
     }
 
