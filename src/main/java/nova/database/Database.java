@@ -12,6 +12,9 @@ import nova.ui.Nova;
 
 public class Database {
     public final static String FILE_PATH = "data/Nova.txt";
+    public static final String NO_EXISTING_FILE_MSG = "I can't find any existing task files..." + "\n" +
+                                                      Nova.INDENT + "So we can start a new one!";
+    public static final String ERR_LOADING_FILE = "There seems to be a problem loading the file... ";
 
     public static void saveTasks(ArrayList<Task> tasks) {
         try {
@@ -42,12 +45,15 @@ public class Database {
             }
 
             case "D": {
-                task = new Deadline(description, isDone, parts[3].trim());
+                String by = parts[3].trim();
+                task = new Deadline(description, isDone, by);
                 break;
             }
 
             case "E": {
-                task = new Event(description, isDone, parts[3].trim(), parts[4].trim());
+                String from = parts[3].trim();
+                String to = parts[4].trim();
+                task = new Event(description, isDone, from, to);
                 break;
             }
 
@@ -85,9 +91,9 @@ public class Database {
             scanner.close();
 
         } catch (FileNotFoundException e) {
-            Nova.printErrorMessage("I can't find any existing task files, so I'll start a new one!");
+            Nova.printErrorMessage(NO_EXISTING_FILE_MSG);
         } catch (Exception e) {
-            Nova.printErrorMessage("There seems to be a problem loading the file: " + e.getMessage());
+            Nova.printErrorMessage(ERR_LOADING_FILE + e.getMessage());
         }
 
         return tasks;
