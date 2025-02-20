@@ -1,5 +1,6 @@
 package nova.ui;
 
+import nova.database.Database;
 import nova.task.*;
 import nova.exception.*;
 
@@ -11,14 +12,14 @@ public class Nova {
     public static final String INDENT = "    ";
     public static final String TASK_LIST_CLEARED = "Okie, tasks all cleared! 😁";
 
-    public static ArrayList<Task> tasks = new ArrayList<>();
+    public static ArrayList<Task> tasks;
 
     public static final String EMPTY_TASK_LIST = "Task list is empty! Woohoo~ 🥳";
     public static final String NEW_TASK_ADDED = "Gotcha! 🙂‍↕️ I've added a new task: ";
     public static final String TASK_REMOVED = "Gotcha! 🙂‍↔️ I've removed this task: ";
 
 
-    private static int counter = 0;
+    private static int counter;
 
     public static void printLogo() {
         String logo = """
@@ -115,9 +116,12 @@ public class Nova {
 
         switch (command) {
         case "todo": {
-            Task t = new Todo(taskName);
+            Task t = new Todo(taskName, false);
             tasks.add(t);
             counter++;
+
+            saveTasks();
+
             break;
         }
 
@@ -130,9 +134,12 @@ public class Nova {
             String taskDesc = words[0].trim();
             String by = words[1].trim();
 
-            Task d = new Deadline(taskDesc, by);
+            Task d = new Deadline(taskDesc, false, by);
             tasks.add(d);
             counter++;
+
+            saveTasks();
+
             break;
         }
 
@@ -146,9 +153,11 @@ public class Nova {
             String from = words[1].trim();
             String to = words[2].trim();
 
-            Task e = new Event(taskDesc, from, to);
+            Task e = new Event(taskDesc, false, from, to);
             tasks.add(e);
             counter++;
+
+            saveTasks();
 
             break;
         }
@@ -175,11 +184,13 @@ public class Nova {
         switch (command) {
         case "mark": {
             tasks.get(taskId - 1).markTaskDone();
+            saveTasks();
             break;
         }
 
         case "unmark": {
             tasks.get(taskId - 1).unmarkTaskDone();
+            saveTasks();
             break;
         }
 
@@ -197,6 +208,15 @@ public class Nova {
         default:
             break;
         }
+    }
+
+    private static void saveTasks() {
+        Database.saveTasks(tasks);
+    }
+
+    static {
+        tasks = Database.loadTaskList();
+        counter = tasks.size();
     }
 
     public static void main(String[] args) {

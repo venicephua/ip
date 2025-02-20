@@ -9,9 +9,9 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) {
+    public Task(String description, boolean isDone) {
         this.description = description;
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
     public String getStatusIcon() {
@@ -33,5 +33,9 @@ public class Task {
     @Override
     public String toString() {
         return getStatusIcon() + description;
+    }
+
+    public String toSaveFormat() {
+        return (isDone ? "1" : "0") + " | " + description;
     }
 }
