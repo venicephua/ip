@@ -3,24 +3,20 @@ package nova.ui;
 import nova.task.*;
 import nova.exception.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Nova {
-    public static final String BORDER = "   _________________________________________";
+    public static final String BORDER = "   _____________________________________________";
     public static final String INDENT = "    ";
-    private static final int MAX_TASKS = 100;
+    public static final String TASK_LIST_CLEARED = "Okie, tasks all cleared! 😁";
 
-    private static final Task[] tasks = new Task[MAX_TASKS];
-    public static final String ERR_TASK_NUM = "We're missing a task number!";
-    public static final String ERR_INVALID_TASK = "I can't find this task :/";
-    public static final String ERR_EMPTY_TASK = "We're missing a task name!";
-    public static final String ERR_INVALID_COMMAND = "I'm not sure what to do with: ";
-    public static final String ERR_DEADLINE_FORMAT = "Please follow this format: " + "\n" +
-                                                     INDENT + "deadline <task> /by <date>";
-    public static final String ERR_EVENT_FORMAT = "Please follow this format: " + "\n" +
-                                                  INDENT + "event <task> /from <date> /to <date>";
-    public static final String NEW_TASK_ADDED = "Gotcha! I've added a new task: ";
-    public static final String TASK_LIST_FULL = "Task list is full!";
+    public static ArrayList<Task> tasks = new ArrayList<>();
+
+    public static final String EMPTY_TASK_LIST = "Task list is empty! Woohoo~ 🥳";
+    public static final String NEW_TASK_ADDED = "Gotcha! 🙂‍↕️ I've added a new task: ";
+    public static final String TASK_REMOVED = "Gotcha! 🙂‍↔️ I've removed this task: ";
+
 
     private static int counter = 0;
 
@@ -37,13 +33,13 @@ public class Nova {
 
     public static void sayHello() {
         System.out.println(BORDER);
-        printMessage("Hey there!! I'm Nova :D");
+        printMessage("Hey there!! I'm Nova 😚");
         printMessage("What can I do for you?");
         System.out.println(BORDER);
     }
 
     public static void sayBye() {
-        printMessage("Bye now! See you soon! ^o^");
+        printMessage("Bye now! See you soon! 😉");
     }
 
     public static void printMessage(String message) {
@@ -51,98 +47,109 @@ public class Nova {
     }
 
     public static void printErrorMessage(String errorMessage) {
-        System.out.println(INDENT + "Girl... " + errorMessage);
+        System.out.println(INDENT + "Uh oh... 😧 " + errorMessage);
     }
 
     public static void listTasks() {
         if (counter == 0) {
-            printMessage("Task list is empty! Woohoo~ ^o^");
+            printMessage(EMPTY_TASK_LIST);
             return;
         }
 
-        printMessage("Hey girl~ What should we do today?");
+        printMessage("Hey girl~ What should we do today? 🤔");
         for (int i = 0; i < counter; i++) {
-            printMessage((i + 1) + ". " + tasks[i].toString());
+            printMessage((i + 1) + ". " + tasks.get(i).toString());
         }
     }
 
-    public static void processCommand(String command, String taskName)
-            throws InvalidCommandException {
+    public static void clearTasks() {
+        if (counter == 0) {
+            printMessage(EMPTY_TASK_LIST);
+            return;
+        }
+
+        tasks.clear();
+        printMessage(TASK_LIST_CLEARED);
+        counter = 0;
+    }
+
+    public static void processCommand(String command, String taskName) throws NovaException {
         switch (command) {
         case "list": {
             listTasks();
             break;
         }
 
-        case "mark", "unmark" : {
+        case "clear": {
+            clearTasks();
+            break;
+        }
+
+        case "mark", "unmark", "delete": {
             try {
                 processTaskStatus(command, taskName);
-            } catch (InvalidTaskException e) {
-                printErrorMessage(ERR_INVALID_TASK);
-            } catch (NumberFormatException e) {
-                printErrorMessage(ERR_TASK_NUM);
+            } catch (NovaException e) {
+                printErrorMessage(e.getMessage());
             }
             break;
         }
 
         case "todo", "deadline", "event": {
-            if (counter >= tasks.length) {
-                printMessage(TASK_LIST_FULL);
-                break;
-            }
-
             try {
                 processTask(command, taskName);
-            } catch (EmptyTaskException e) {
-                printErrorMessage(ERR_EMPTY_TASK);
-            } catch (InvalidDeadlineException e) {
-                printErrorMessage(ERR_DEADLINE_FORMAT);
-            } catch (InvalidEventException e) {
-                printErrorMessage(ERR_EVENT_FORMAT);
+            } catch (NovaException e) {
+                printErrorMessage(e.getMessage());
             }
             break;
         }
 
         default:
-            throw new InvalidCommandException();
+            throw NovaException.invalidCommand();
         }
     }
 
-    public static void processTask(String command, String taskName)
-            throws EmptyTaskException, InvalidDeadlineException, InvalidEventException {
+    public static void processTask(String command, String taskName) throws NovaException {
         if (taskName == null) {
-            throw new EmptyTaskException();
+            throw NovaException.emptyTask();
         }
 
         switch (command) {
         case "todo": {
-            tasks[counter++] = new Todo(taskName);
+            Task t = new Todo(taskName);
+            tasks.add(t);
+            counter++;
             break;
         }
 
         case "deadline": {
-            String[] words = taskName.split("/by ", 2);
+            String[] words = taskName.split(" /by ", 2);
             if (words.length < 2) {
-                throw new InvalidDeadlineException();
+                throw NovaException.invalidDeadline();
             }
 
-            String taskDesc = words[0];
-            String by = words[1];
+            String taskDesc = words[0].trim();
+            String by = words[1].trim();
 
-            tasks[counter++] = new Deadline(taskDesc, by);
+            Task d = new Deadline(taskDesc, by);
+            tasks.add(d);
+            counter++;
             break;
         }
 
         case "event": {
             String[] words = taskName.split(" /from | /to ", 3);
             if (words.length < 3) {
-                throw new InvalidEventException();
+                throw NovaException.invalidEvent();
             }
 
             String taskDesc = words[0].trim();
             String from = words[1].trim();
             String to = words[2].trim();
-            tasks[counter++] = new Event(taskDesc, from, to);
+
+            Task e = new Event(taskDesc, from, to);
+            tasks.add(e);
+            counter++;
+
             break;
         }
 
@@ -151,29 +158,39 @@ public class Nova {
         }
 
         printMessage(NEW_TASK_ADDED);
-        printMessage(tasks[counter-1].toString());
+        printMessage(tasks.get(counter-1).toString());
         printMessage("Now we have " + counter + ((counter == 1) ? " task!" : " tasks!"));
     }
 
-    public static void processTaskStatus(String command, String taskName)
-            throws InvalidTaskException, NumberFormatException {
+    public static void processTaskStatus(String command, String taskName) throws NovaException {
         if (taskName == null) {
-            throw new NumberFormatException();
+            throw NovaException.missingTaskNumber();
         }
 
         int taskId = Integer.parseInt(taskName);
         if (taskId < 1 || taskId > counter) {
-            throw new InvalidTaskException();
+            throw NovaException.invalidTaskNumber();
         }
 
         switch (command) {
         case "mark": {
-            tasks[taskId - 1].markTaskDone();
+            tasks.get(taskId - 1).markTaskDone();
             break;
         }
 
         case "unmark": {
-            tasks[taskId - 1].unmarkTaskDone();
+            tasks.get(taskId - 1).unmarkTaskDone();
+            break;
+        }
+
+        case "delete": {
+            printMessage(TASK_REMOVED);
+            printMessage(tasks.get(taskId-1).toString());
+
+            tasks.remove(taskId - 1);
+            counter--;
+
+            printMessage("Now we have " + counter + ((counter == 1) ? " task!" : " tasks!"));
             break;
         }
 
@@ -199,7 +216,7 @@ public class Nova {
             if (index == -1) {
                 command = line;
             } else {
-                command = line.substring(0, index);
+                command = line.substring(0, index).trim();
                 taskName = line.substring(index+1).trim();
             }
 
@@ -207,7 +224,7 @@ public class Nova {
 
             switch (command) {
             case "hello", "hi", "hey": {
-                printMessage("Hi~ :D ");
+                printMessage("Hi~ 😆");
                 break;
             }
 
@@ -221,12 +238,13 @@ public class Nova {
             default:
                 try {
                     processCommand(command, taskName);
-                } catch (InvalidCommandException e) {
-                    printErrorMessage(ERR_INVALID_COMMAND);
+                } catch (NovaException e) {
+                    printErrorMessage(e.getMessage());
                     printMessage(line);
                 }
                 break;
             }
+
             System.out.println(BORDER);
         }
     }
