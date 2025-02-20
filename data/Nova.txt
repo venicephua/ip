@@ -1,0 +1,6 @@
+T | 1 | read books
+D | 1 | return books | 5 march
+E | 1 | exam | 10 | 11
+E | 0 | group meeting | 10pm | 11pm
+D | 0 | lab assignment | sun 2359
+T | 0 | complete proj work
