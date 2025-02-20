@@ -72,6 +72,7 @@ public class Nova {
         tasks.clear();
         printMessage(TASK_LIST_CLEARED);
         counter = 0;
+        saveTasks();
     }
 
     public static void processCommand(String command, String taskName) throws NovaException {
@@ -200,6 +201,8 @@ public class Nova {
 
             tasks.remove(taskId - 1);
             counter--;
+
+            saveTasks();
 
             printMessage("Now we have " + counter + ((counter == 1) ? " task!" : " tasks!"));
             break;
