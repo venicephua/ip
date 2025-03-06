@@ -1,5 +1,9 @@
 package nova.ui;
 
+/**
+ * Handles all user interface operations for the Nova application.
+ * Manages user input, display formatting, and messaging.
+ */
 public class Ui {
     public static final String BORDER = "   _____________________________________________";
     public static final String INDENT = "    ";
@@ -10,6 +14,9 @@ public class Ui {
 
     private final java.util.Scanner scanner;
 
+    /**
+     * Constructs a new UI instance and initializes the scanner for user input.
+     */
     public Ui() {
         this.scanner = new java.util.Scanner(System.in);
     }
@@ -25,6 +32,9 @@ public class Ui {
         System.out.print(BORDER + "\n" + logo);
     }
 
+    /**
+     * Displays the welcome message at application startup.
+     */
     public void sayHello() {
         System.out.println(BORDER);
         printMessage("Hey there!! I'm Nova 😚");
@@ -32,6 +42,9 @@ public class Ui {
         System.out.println(BORDER);
     }
 
+    /**
+     * Displays the goodbye message when exiting the application.
+     */
     public void sayBye() {
         printMessage("Bye now! See you soon! 😉");
     }
@@ -48,11 +61,19 @@ public class Ui {
         System.out.println(BORDER);
     }
 
+    /**
+     * Reads a command from the user.
+     *
+     * @return The command entered by the user, trimmed of leading/trailing whitespace
+     */
     public String readCommand() {
         System.out.print("> ");
         return scanner.nextLine().trim();
     }
 
+    /**
+     * Closes the scanner when the application exits.
+     */
     public void close() {
         scanner.close();
     }
