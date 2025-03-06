@@ -1,17 +1,20 @@
 package nova.task;
 
-import nova.ui.Nova;
+import nova.ui.Ui;
 
 public class Task {
-    public static final String MARKED_TASK_DONE = "Yay! I've marked this task done: ";
-    public static final String MARKED_TASK_UNDONE = "Okay, I've marked this task undone: ";
+
+    public final String MARKED_TASK_DONE = "Yay! I've marked this task done: ";
+    public final String MARKED_TASK_UNDONE = "Okay, I've marked this task undone: ";
 
     protected String description;
     protected boolean isDone;
+    protected Ui ui;
 
-    public Task(String description, boolean isDone) {
+    public Task(String description, boolean isDone, Ui ui) {
         this.description = description;
         this.isDone = isDone;
+        this.ui = ui;
     }
 
     public String getStatusIcon() {
@@ -20,14 +23,14 @@ public class Task {
 
     public void markTaskDone() {
         this.isDone = true;
-        Nova.printMessage(MARKED_TASK_DONE);
-        Nova.printMessage(this.toString());
+        ui.printMessage(MARKED_TASK_DONE);
+        ui.printMessage(this.toString());
     }
 
     public void unmarkTaskDone() {
         this.isDone = false;
-        Nova.printMessage(MARKED_TASK_UNDONE);
-        Nova.printMessage(this.toString());
+        ui.printMessage(MARKED_TASK_UNDONE);
+        ui.printMessage(this.toString());
     }
 
     @Override

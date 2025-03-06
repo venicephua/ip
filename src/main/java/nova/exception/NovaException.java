@@ -1,15 +1,15 @@
 package nova.exception;
 
-import nova.ui.Nova;
+import nova.ui.Ui;
 
 public class NovaException extends Exception {
     // ERROR MESSAGES
     public static final String ERR_EMPTY_TASK = "We're missing a task name! ⚠️";
     public static final String ERR_INVALID_COMMAND = "I'm not sure what to do with: ";
     public static final String ERR_INVALID_DEADLINE = "Please follow this format: " + "\n" +
-                                                       Nova.INDENT + "deadline <description> /by <date>";
+                                                       Ui.INDENT + "deadline <description> /by <date>";
     public static final String ERR_INVALID_EVENT = "Please follow this format: " + "\n" +
-                                                    Nova.INDENT + "event <description> /from <date> /to <date>";
+                                                    Ui.INDENT + "event <description> /from <date> /to <date>";
     public static final String ERR_INVALID_TASK_NUMBER = "I can't find this task 😕";
     public static final String ERR_MISSING_TASK_NUMBER = "We're missing a task number! ⚠️";
 
