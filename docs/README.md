@@ -16,6 +16,7 @@ manage and organise your daily tasks efficiently.
     What can I do for you?
    _____________________________________________
 ```
+<br>
 
 ## Features
 
@@ -33,9 +34,9 @@ Output:
 
 ### Adding Tasks
 Nova allows you to manage different types of tasks:
-- **Todos** -- Simple tasks without due dates
-- **Deadlines** -- Tasks with a specified due date
-- **Events** -- Activities with start and end dates
+- **Todos** — Simple tasks without due dates
+- **Deadlines** — Tasks with a specified due date
+- **Events** — Activities with start and end dates
 
 <br>
 
@@ -204,6 +205,7 @@ Exits and closes the application.
     Bye now! See you soon! 😉
    _____________________________________________
 ```
+<br>
 
 ## Command Summary
 | Command            | Description                         | Format                                            |
@@ -219,6 +221,8 @@ Exits and closes the application.
 | `delete`           | Deletes a specific task             | `delete INDEX`                                    |
 | `clear`            | Deletes all tasks from current list | `clear`                                           |
 | `bye`              | Ends the application                | `bye`                                             |
+
+<br> 
 
 ## Saving the data
 Nova data are saved automatically in the hard disk after any command that changes the data. \
