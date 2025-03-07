@@ -13,6 +13,17 @@ public class TaskList {
     private final Ui ui;
 
     /**
+     * Constructs a new empty TaskList with the specified UI.
+     * Initializes the tasks collection as an empty ArrayList.
+     *
+     * @param ui UI instance for displaying messages
+     */
+    public TaskList(Ui ui) {
+        this.tasks = new ArrayList<>();
+        this.ui = ui;
+    }
+
+    /**
      * Constructs a new TaskList with existing tasks and UI reference.
      *
      * @param tasks ArrayList of existing Task objects
@@ -28,9 +39,11 @@ public class TaskList {
      *
      * @param task The Task object to add
      */
-    public void addTask(Task task) {
+    public void addTask(Task task, boolean isPrint) {
         tasks.add(task);
-        ui.printMessage("Now we have " + tasks.size() + ((tasks.size() == 1) ? " task!" : " tasks!"));
+        if (isPrint) {
+            ui.printMessage("Now we have " + tasks.size() + ((tasks.size() == 1) ? " task!" : " tasks!"));
+        }
     }
 
     /**
@@ -54,13 +67,13 @@ public class TaskList {
     /**
      * Lists all tasks or displays a message if the list is empty.
      */
-    public void listTasks() {
+    public void listTasks(String message) {
         if (tasks.isEmpty()) {
             ui.printMessage(ui.EMPTY_TASK_LIST);
             return;
         }
 
-        ui.printMessage("Hey girl~ What should we do today? 🤔");
+        ui.printMessage(message);
         for (int i = 0; i < tasks.size(); i++) {
             ui.printMessage((i + 1) + ". " + tasks.get(i).toString());
         }

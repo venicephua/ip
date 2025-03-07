@@ -8,6 +8,7 @@ import nova.ui.Ui;
  * Command to list all tasks in the current task list.
  */
 public class ListCommand extends Command {
+    public static final String LIST_TASK_MESSAGE = "Hey girl~ What should we do today? 🤔";
 
     /**
      * Executes the list command by listing all tasks in the task list.
@@ -18,6 +19,6 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        tasks.listTasks();
+        tasks.listTasks(LIST_TASK_MESSAGE);
     }
 }

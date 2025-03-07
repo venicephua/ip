@@ -19,7 +19,7 @@ public class Parser {
     public static Command parse(String fullCommand) throws NovaException {
         String[] commandParts = fullCommand.split(" ", 2);
         String command = commandParts[0].toLowerCase();
-        String taskName = commandParts.length > 1 ? commandParts[1] : null;
+        String taskName = commandParts.length > 1 ? commandParts[1].toLowerCase() : null;
 
         if (command.contains("hi") ||
                 command.contains("hey") ||
@@ -34,6 +34,7 @@ public class Parser {
             case "mark" -> parseMarkCommand(taskName, true);
             case "unmark" -> parseMarkCommand(taskName, false);
             case "delete" -> parseDeleteCommand(taskName);
+            case "find" -> parseFindCommand(taskName);
             case "todo" -> parseTodoCommand(taskName);
             case "deadline" -> parseDeadlineCommand(taskName);
             case "event" -> parseEventCommand(taskName);
@@ -80,6 +81,20 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw NovaException.invalidTaskNumber();
         }
+    }
+
+    /**
+     * Parses find commands which require a search term.
+     *
+     * @param taskName The search term extracted from user input
+     * @return FindCommand initialized with the search term
+     * @throws NovaException If the search term is missing
+     */
+    private static Command parseFindCommand(String taskName) throws NovaException {
+        if (taskName == null) {
+            throw NovaException.emptyTask();
+        }
+        return new nova.command.FindCommand(taskName);
     }
 
     /**

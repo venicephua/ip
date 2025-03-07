@@ -37,7 +37,7 @@ public class TodoCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws NovaException {
         Task todo = new Todo(taskName, false, ui);
-        tasks.addTask(todo);
+        tasks.addTask(todo, true);
         ui.printMessage(ui.NEW_TASK_ADDED);
         ui.printMessage(todo.toString());
         storage.saveTasks(tasks.getTasks());
