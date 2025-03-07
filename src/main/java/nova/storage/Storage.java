@@ -7,9 +7,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import nova.task.*;
+import nova.task.Task;
+import nova.task.Todo;
+import nova.task.Deadline;
+import nova.task.Event;
+
 import nova.ui.Ui;
 
+/**
+ * Handles persistent storage operations for the Nova application.
+ * Responsible for saving tasks to and loading tasks from file.
+ */
 public class Storage {
     public static final String NO_EXISTING_FILE_MSG = "I can't find any existing task files..." + "\n" +
                                                       Ui.INDENT + "So we can start a new one!";
@@ -18,12 +26,24 @@ public class Storage {
     private final String filePath;
     private final Ui ui;
 
+    /**
+     * Constructs a new Storage instance with specified file path and UI reference.
+     *
+     * @param filePath Path to the file where tasks will be stored
+     * @param ui UI instance for displaying messages
+     */
     public Storage(String filePath, Ui ui) {
         this.filePath = filePath;
         this.ui = ui;
     }
 
-    public ArrayList<Task> load() {
+    /**
+     * Loads tasks from the storage file.
+     * Creates directory if they don't exist and handles file-related exceptions.
+     *
+     * @return ArrayList of Task objects loaded from file
+     */
+    public ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
@@ -52,6 +72,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the current list of tasks to the storage file.
+     *
+     * @param tasks ArrayList of Task objects to save
+     */
     public void saveTasks(ArrayList<Task> tasks) {
         try {
             FileWriter writer = new FileWriter(filePath);
@@ -66,6 +91,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Converts a line from the storage file into a Task object.
+     * Handles different task types (Todo, Deadline, Event) based on format.
+     *
+     * @param line String representation of a task from the storage file
+     * @return Task object created from the line, or null if conversion fails
+     */
     public Task convertTask(String line) {
         try {
             String[] parts = line.split("\\|");
