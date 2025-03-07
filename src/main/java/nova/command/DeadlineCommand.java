@@ -19,7 +19,7 @@ public class DeadlineCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws NovaException {
         Task deadline = new Deadline(taskName, false, ui, by);
-        tasks.addTask(deadline);
+        tasks.addTask(deadline, true);
         ui.printMessage(ui.NEW_TASK_ADDED);
         ui.printMessage(deadline.toString());
         storage.saveTasks(tasks.getTasks());

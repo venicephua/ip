@@ -4,7 +4,7 @@ public class Ui {
     public static final String BORDER = "   _____________________________________________";
     public static final String INDENT = "    ";
     public final String TASK_LIST_CLEARED = "Okie, tasks all cleared! 😁";
-    public final String EMPTY_TASK_LIST = "Task list is empty! Woohoo~ 🥳";
+    public final String EMPTY_TASK_LIST = "No tasks over here! Woohoo~ 🥳";
     public final String NEW_TASK_ADDED = "Gotcha! 🙂‍↕️ I've added a new task: ";
     public final String TASK_REMOVED = "Gotcha! 🙂‍↔️ I've removed this task: ";
 

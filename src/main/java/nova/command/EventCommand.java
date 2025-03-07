@@ -21,7 +21,7 @@ public class EventCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws NovaException {
         Task event = new Event(taskName, false, ui, from, to);
-        tasks.addTask(event);
+        tasks.addTask(event, true);
         ui.printMessage(ui.NEW_TASK_ADDED);
         ui.printMessage(event.toString());
         storage.saveTasks(tasks.getTasks());

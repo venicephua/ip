@@ -8,14 +8,21 @@ public class TaskList {
     private final ArrayList<Task> tasks;
     private final Ui ui;
 
+    public TaskList(Ui ui) {
+        this.tasks = new ArrayList<>();
+        this.ui = ui;
+    }
+
     public TaskList(ArrayList<Task> tasks, Ui ui) {
         this.tasks = tasks;
         this.ui = ui;
     }
 
-    public void addTask(Task task) {
+    public void addTask(Task task, boolean isPrint) {
         tasks.add(task);
-        ui.printMessage("Now we have " + tasks.size() + ((tasks.size() == 1) ? " task!" : " tasks!"));
+        if (isPrint) {
+            ui.printMessage("Now we have " + tasks.size() + ((tasks.size() == 1) ? " task!" : " tasks!"));
+        }
     }
 
     public void removeTask(int taskId) throws NovaException {
@@ -30,13 +37,13 @@ public class TaskList {
         ui.printMessage("Now we have " + tasks.size() + ((tasks.size() == 1) ? " task!" : " tasks!"));
     }
 
-    public void listTasks() {
+    public void listTasks(String message) {
         if (tasks.isEmpty()) {
             ui.printMessage(ui.EMPTY_TASK_LIST);
             return;
         }
 
-        ui.printMessage("Hey girl~ What should we do today? 🤔");
+        ui.printMessage(message);
         for (int i = 0; i < tasks.size(); i++) {
             ui.printMessage((i + 1) + ". " + tasks.get(i).toString());
         }
