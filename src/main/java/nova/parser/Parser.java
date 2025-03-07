@@ -56,6 +56,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses find commands which require a search term.
+     *
+     * @param taskName The search term extracted from user input
+     * @return FindCommand initialized with the search term
+     * @throws NovaException If the search term is missing
+     */
     private static Command parseFindCommand(String taskName) throws NovaException {
         if (taskName == null) {
             throw NovaException.emptyTask();
