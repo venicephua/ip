@@ -42,7 +42,10 @@ public class TaskList {
     public void addTask(Task task, boolean isPrint) {
         tasks.add(task);
         if (isPrint) {
-            ui.printMessage("Now we have " + tasks.size() + ((tasks.size() == 1) ? " task!" : " tasks!"));
+            int taskId = tasks.size();
+            ui.printMessage(ui.NEW_TASK_ADDED);
+            ui.printMessage(tasks.get(taskId - 1).toString());
+            ui.printMessage("Now we have " + taskId + ((taskId == 1) ? " task!" : " tasks!"));
         }
     }
 
