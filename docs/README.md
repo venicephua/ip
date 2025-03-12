@@ -210,6 +210,7 @@ Exits and closes the application.
 
 ## Command Summary
 
+
 | Command            | Description                         | Format                                            |
 |--------------------|-------------------------------------|---------------------------------------------------|
 | `hi`/`hey`/`hello` | Displays greeting                   | `hi`/`hey`/`hello`                                |
