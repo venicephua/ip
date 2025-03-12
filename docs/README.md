@@ -4,7 +4,7 @@
 Nova is a command line interface (CLI) based task management application, designed to help you 
 manage and organise your daily tasks efficiently. 
 
-```angular2html
+```
    _____________________________________________
      __    _  
     |  \  | |  ___  __    __  ___ _  
@@ -48,7 +48,7 @@ Adds a _Todo_ to the _TaskList_.
 **Example:** `todo plan overseas trip`
 
 **Output:**
-```angular2html
+```
 > todo plan overseas trip
    _____________________________________________   
     Gotcha! 🙂‍↕️ I've added a new task: 
@@ -66,7 +66,7 @@ Adds a _Deadline_ to the _TaskList_.
 **Example:** `deadline schedule meeting /by tmr 12pm`
 
 **Output:**
-```angular2html
+```
 > deadline schedule meeting /by tmr 12pm
    _____________________________________________
     Gotcha! 🙂‍↕️ I've added a new task: 
@@ -84,7 +84,7 @@ Adds an _Event_ to the _TaskList_.
 **Example:** `event birthday party /from 7pm /to 11pm`
 
 **Output:**
-```angular2html
+```
 > event birthday party /from 7pm /to 11pm
    _____________________________________________
     Gotcha! 🙂‍↕️ I've added a new task:
@@ -100,7 +100,7 @@ Lists all the current tasks in the _TaskList_.
 **Format:** `list`
 
 **Output:**
-```angular2html
+```
 > list
    _____________________________________________
     Hey girl~ What should we do today? 🤔
@@ -119,7 +119,7 @@ Marks a specific task as complete.
 **Example:** `mark 2`
 
 **Output:**
-```angular2html
+```
 > mark 2
    _____________________________________________
     Yay! I've marked this task done: 
@@ -136,7 +136,7 @@ Marks a specific task as incomplete.
 **Example:** `unmark 2`
 
 **Output:**
-```angular2html
+```
 > unmark 2
    _____________________________________________
     Okay, I've marked this task undone: 
@@ -153,7 +153,7 @@ Finds and displays all tasks containing the specific keyword.
 **Example:** `find birthday`
 
 **Output:**
-```angular2html
+```
 > find birthday
    _____________________________________________
     Here are the matching tasks 🔍:
@@ -170,7 +170,7 @@ Deletes a specific task from the _TaskList_.
 **Example:** `delete 2`
 
 **Output:**
-```angular2html
+```
    _____________________________________________
     Gotcha! 🙂‍↔️ I've removed this task: 
     [D][ ] schedule meeting (by: tmr 12pm)
@@ -185,7 +185,7 @@ Clears all current tasks in _TaskList_.
 **Format:** `clear`
 
 **Output:**
-```angular2html
+```
 > clear
    _____________________________________________
     Okie, tasks all cleared! 😁
@@ -199,7 +199,7 @@ Exits and closes the application.
 **Format:** `bye`
 
 **Output:**
-```angular2html
+```
 > bye
    _____________________________________________
     Bye now! See you soon! 😉
@@ -207,7 +207,9 @@ Exits and closes the application.
 ```
 <br>
 
+
 ## Command Summary
+
 | Command            | Description                         | Format                                            |
 |--------------------|-------------------------------------|---------------------------------------------------|
 | `hi`/`hey`/`hello` | Displays greeting                   | `hi`/`hey`/`hello`                                |
@@ -221,6 +223,7 @@ Exits and closes the application.
 | `delete`           | Deletes a specific task             | `delete INDEX`                                    |
 | `clear`            | Deletes all tasks from current list | `clear`                                           |
 | `bye`              | Ends the application                | `bye`                                             |
+
 
 <br> 
 
