@@ -31,10 +31,10 @@ public class Task {
     /**
      * Returns the status icon indicating whether the task is done.
      *
-     * @return A string representation of the task's status (✖ for done, space for not done)
+     * @return A string representation of the task's status (X for done, space for not done)
      */
     public String getStatusIcon() {
-        return "[" + (isDone ? "✖" : " ") + "] ";
+        return "[" + (isDone ? "X" : " ") + "] ";
     }
 
     /**

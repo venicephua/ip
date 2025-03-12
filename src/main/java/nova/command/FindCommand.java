@@ -12,7 +12,7 @@ import nova.ui.Ui;
  */
 public class FindCommand extends Command {
     private final String taskName;
-    public static final String FIND_TASK_MESSAGE = "Here are the matching tasks 🔍:";
+    public static final String FIND_TASK_MESSAGE = "Here are the matching tasks ^.^:";
 
     /**
      * Constructs a new FindCommand with the specified search term.

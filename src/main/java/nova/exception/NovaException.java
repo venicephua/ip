@@ -11,14 +11,14 @@ public class NovaException extends Exception {
      * Error message constants used throughout the application.
      * These constants define the user-facing error messages for various error conditions.
      */
-    public static final String ERR_EMPTY_TASK = "We're missing a task name! ⚠️";
+    public static final String ERR_EMPTY_TASK = "We're missing a task name!!";
     public static final String ERR_INVALID_COMMAND = "I'm not sure what to do with: ";
     public static final String ERR_INVALID_DEADLINE = "Please follow this format: " + "\n" +
                                                        Ui.INDENT + "deadline <description> /by <date>";
     public static final String ERR_INVALID_EVENT = "Please follow this format: " + "\n" +
                                                     Ui.INDENT + "event <description> /from <date> /to <date>";
-    public static final String ERR_INVALID_TASK_NUMBER = "I can't find this task 😕";
-    public static final String ERR_MISSING_TASK_NUMBER = "We're missing a task number! ⚠️";
+    public static final String ERR_INVALID_TASK_NUMBER = "I can't find this task...";
+    public static final String ERR_MISSING_TASK_NUMBER = "We're missing a task number!!";
 
     /**
      * Constructs a new NovaException with the specified error message.

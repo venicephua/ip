@@ -5,12 +5,15 @@ package nova.ui;
  * Manages user input, display formatting, and messaging.
  */
 public class Ui {
-    public static final String BORDER = "   _____________________________________________";
+    public static final String BORDER = "   __________________________________________________";
     public static final String INDENT = "    ";
-    public final String TASK_LIST_CLEARED = "Okie, tasks all cleared! 😁";
-    public final String EMPTY_TASK_LIST = "No tasks over here! Woohoo~ 🥳";
-    public final String NEW_TASK_ADDED = "Gotcha! 🙂‍↕️ I've added a new task: ";
-    public final String TASK_REMOVED = "Gotcha! 🙂‍↔️ I've removed this task: ";
+    public static final String ERROR_MESSAGE = "Uh oh... >.<\" ";
+    public final String TASK_LIST_CLEARED = "Okie, tasks all cleared! ^o^";
+    public final String EMPTY_TASK_LIST = "No tasks over here! Woohoo~ *^u^*";
+    public final String NEW_TASK_ADDED = "Gotcha! ^.^ I've added a new task: ";
+    public final String TASK_REMOVED = "Gotcha! ^.^ I've removed this task: ";
+    public static final String BYE_MESSAGE = "Bye now! See you soon! >o<";
+
 
     private final java.util.Scanner scanner;
 
@@ -37,7 +40,7 @@ public class Ui {
      */
     public void sayHello() {
         System.out.println(BORDER);
-        printMessage("Hey there!! I'm Nova 😚");
+        printMessage("Hey there!! I'm Nova ^o^");
         printMessage("What can I do for you?");
         System.out.println(BORDER);
     }
@@ -46,7 +49,7 @@ public class Ui {
      * Displays the goodbye message when exiting the application.
      */
     public void sayBye() {
-        printMessage("Bye now! See you soon! 😉");
+        printMessage(BYE_MESSAGE);
     }
 
     public void printMessage(String message) {
@@ -54,7 +57,7 @@ public class Ui {
     }
 
     public void printError(String errorMessage) {
-        System.out.println(INDENT + "Uh oh... 😧 " + errorMessage);
+        System.out.println(INDENT + ERROR_MESSAGE + errorMessage);
     }
 
     public void showLine() {
